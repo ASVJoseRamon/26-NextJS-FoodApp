@@ -4,6 +4,20 @@ import classes from './page.module.css'
 import { getMeal } from "@/lib/meals";
 import { notFound } from "next/navigation";
 
+export async function generateMetadata({params}) {
+    const {slug} = await params;
+    const meal = getMeal(slug);
+
+    if(!meal) {
+        notFound();
+    }
+
+    return {
+        title: meal.title,
+        description: meal.summary
+    }
+}
+
 export default async function MealSlug({ params }) {
     const {slug} = await params;
     
